@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vercel HR Assistants</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{--bg:#fbf6ec;--card:#fff;--ink:#1d2b24;--mute:#5d6b63;--g:#1f7a55;--g2:#d9f0e4;--c:#ff6b4a;--line:#e8e0cf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a17;--card:#1d2621;--ink:#f1ece0;--mute:#a4b0a8;--g:#4fd196;--g2:#21382c;--c:#ff8266;--line:#2c3a32;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141a17;--card:#1d2621;--ink:#f1ece0;--mute:#a4b0a8;--g:#4fd196;--g2:#21382c;--c:#ff8266;--line:#2c3a32;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 Figtree,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;line-height:1.08;letter-spacing:-.02em}
+h1{font-size:clamp(2.3rem,9vw,4.2rem);font-weight:800}
+h2{font-size:clamp(1.8rem,6vw,2.7rem);font-weight:800;margin-bottom:.6rem}
+section{padding:3.2rem 1.2rem;max-width:760px;margin:auto}
+.sub{color:var(--mute);margin:.8rem 0 1.4rem;font-size:1.08rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--c);color:#fff;border:0;border-radius:99px;padding:.95rem 1.5rem;font:700 1.05rem Figtree,sans-serif;cursor:pointer;text-decoration:none;box-shadow:0 6px 0 rgba(0,0,0,.14);transition:transform .15s}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.14)}
+.btn.g{background:var(--g);color:#fff}.btn.o{background:transparent;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.row{display:flex;gap:.7rem;flex-wrap:wrap}
+mark{background:linear-gradient(transparent 60%,var(--g2) 60%);color:inherit}
+/* hero */
+.hero{padding-top:2rem}
+.brand{font:800 1.2rem 'Bricolage Grotesque',sans-serif;color:var(--g);margin-bottom:1rem}
+.tag{display:inline-block;background:var(--g2);color:var(--g);font-weight:700;border-radius:99px;padding:.3rem .9rem;font-size:.9rem;margin-bottom:1rem}
+.board{margin:1.6rem 0;display:grid;gap:.55rem}
+.job{display:flex;align-items:center;gap:.7rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.7rem .9rem;font-weight:600;opacity:0;animation:in .5s forwards}
+.job i{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:.8rem;color:#fff;animation:tick .4s forwards}
+.job small{margin-left:auto;color:var(--mute);font-weight:400}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes tick{to{background:var(--g);border-color:var(--g)}}
+.job:nth-child(1){animation-delay:.2s}.job:nth-child(1) i{animation-delay:1s}
+.job:nth-child(2){animation-delay:.5s}.job:nth-child(2) i{animation-delay:1.6s}
+.job:nth-child(3){animation-delay:.8s}.job:nth-child(3) i{animation-delay:2.2s}
+.job:nth-child(4){animation-delay:1.1s}.job:nth-child(4) i{animation-delay:2.8s}
+.job i::after{content:"✓"}
+.rev{opacity:0;transform:translateY(24px);transition:all .7s}.rev.on{opacity:1;transform:none}
+/* pain */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.1rem}
+.stat b{font:800 2.4rem 'Bricolage Grotesque',sans-serif;color:var(--c);display:block}
+/* card / quiz */
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:1.3rem;box-shadow:0 12px 40px rgba(0,0,0,.06)}
+.bar{height:8px;background:var(--g2);border-radius:9px;overflow:hidden;margin-bottom:1.2rem}
+.bar div{height:100%;width:0;background:var(--g);border-radius:9px;transition:width .5s}
+.step{animation:in .4s}
+.step h3{font-size:1.5rem;margin-bottom:.9rem}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:.85rem 1rem;margin-bottom:.55rem;font:600 1rem Figtree,sans-serif;color:var(--ink);cursor:pointer;transition:.15s}
+.opt.sel{border-color:var(--g);background:var(--g2)}
+.opt:active{transform:scale(.98)}
+input[type=text]{width:100%;padding:.9rem 1rem;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:1rem Figtree,sans-serif;margin-bottom:.6rem}
+.big{font:800 2.6rem 'Bricolage Grotesque',sans-serif;color:var(--c)}
+.note{background:var(--g2);border-radius:14px;padding:.9rem 1rem;margin-bottom:.9rem}
+/* sliders */
+input[type=range]{width:100%;accent-color:var(--g);height:34px}
+.lbl{display:flex;justify-content:space-between;font-weight:600;margin-top:.8rem}
+.res{background:var(--ink);color:var(--bg);border-radius:20px;padding:1.2rem;margin-top:1.2rem;text-align:center}
+.res b{font:800 2.4rem 'Bricolage Grotesque',sans-serif;display:block;color:var(--c)}
+/* offer */
+.plans{display:grid;gap:.8rem;margin:1.2rem 0}
+.plan{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:1.1rem;position:relative;text-align:left;font:inherit;color:inherit;width:100%;cursor:pointer;transition:.15s}
+.plan.sel{border-color:var(--g);background:var(--g2)}
+.plan:active{transform:scale(.98)}
+.plan.pop::before{content:"Most chosen";position:absolute;top:-12px;right:14px;background:var(--g);color:#fff;font-size:.78rem;font-weight:700;padding:.15rem .7rem;border-radius:99px}
+.plan b{font:800 2rem 'Bricolage Grotesque',sans-serif}
+.checks{list-style:none;padding:0;margin:1rem 0}
+.checks li{padding:.35rem 0 .35rem 2rem;position:relative;font-weight:600}
+.checks li::before{content:"✓";position:absolute;left:0;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--g);color:#fff;text-align:center;font-size:.85rem;line-height:1.4rem}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1rem;margin-bottom:.6rem}
+summary{font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--c);font-size:1.4rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--mute);margin-top:.6rem}
+.float{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:9;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:pulse 2s infinite;text-decoration:none;font-size:1.7rem}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}100%{box-shadow:0 0 0 20px rgba(37,211,102,0)}}
+footer{text-align:center;color:var(--mute);padding:2rem 1rem 5rem;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.job,.rev{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="float" id="fl" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<section class="hero">
+  <div class="brand">Vercel HR Assistants</div>
+  <span class="tag">HR help for Gulf businesses</span>
+  <h1>Let me take your <mark>HR workload</mark> off your plate.</h1>
+  <p class="sub">A trained HR assistant from Pakistan works 2–4 hours every day for you. From <b>300 AED/SAR a month.</b></p>
+  <div class="board">
+    <div class="job"><i></i>Job posted on 25 sites<small>done</small></div>
+    <div class="job"><i></i>120 CVs sorted<small>done</small></div>
+    <div class="job"><i></i>Interviews booked<small>done</small></div>
+    <div class="job"><i></i>Candidates replied to<small>done</small></div>
+  </div>
+  <div class="row"><a class="btn" href="#quiz">Take the 1-minute quiz →</a><a class="btn o wa" href="#">WhatsApp us</a></div>
+</section>
+
+<section class="rev">
+  <h2>Where does your time go?</h2>
+  <div class="stats">
+    <div class="stat"><b data-n="15">0</b>hours a week on hiring tasks</div>
+    <div class="stat"><b data-n="25">0</b>sites to post one job</div>
+    <div class="stat"><b data-n="60">0</b>CVs for one open role</div>
+    <div class="stat"><b data-n="0">0</b>time left for real growth</div>
+  </div>
+</section>
+
+<section id="quiz" class="rev">
+  <h2>Find out what to hand off</h2>
+  <p class="sub">6 quick taps. No typing needed.</p>
+  <div class="card"><div class="bar"><div id="pb"></div></div><div id="q"></div></div>
+</section>
+
+<section class="rev">
+  <h2>What is your time worth?</h2>
+  <p class="sub">Move the sliders.</p>
+  <div class="card">
+    <div class="lbl"><span>Hours you lose each week</span><span id="hv">10</span></div>
+    <input type="range" id="h" min="2" max="40" value="10">
+    <div class="lbl"><span>Your 1 hour is worth</span><span id="vv">100</span></div>
+    <input type="range" id="v" min="20" max="400" step="10" value="100">
+    <div class="res">You lose about<b id="loss">0</b>every month. An assistant costs <u>500</u>.</div>
+  </div>
+</section>
+
+<section class="rev">
+  <h2>Try me. <mark>Zero risk.</mark></h2>
+  <ul class="checks"><li>Work 1 full month with me</li><li>Not happy? You pay nothing</li><li>Keep all the work I did, free</li><li>Cancel any day. No contract</li></ul>
+  <div class="plans">
+    <button type="button" class="plan" data-p="300" data-h="2"><b>300</b> / month<br>2 hours every day<br><small style="color:var(--mute)">AED or SAR</small></button>
+    <button type="button" class="plan pop sel" data-p="500" data-h="4"><b>500</b> / month<br>4 hours every day<br><small style="color:var(--mute)">AED or SAR</small></button>
+  </div>
+  <a class="btn g" id="pb2" target="_blank" rel="noopener" href="#">Start my free month →</a>
+</section>
+
+<section class="rev">
+  <h2>Or build your own trial</h2>
+  <p class="sub">You pick the price and the days.</p>
+  <div class="card">
+    <div class="lbl"><span>You pay</span><span><b id="pv">250</b> / month rate</span></div>
+    <input type="range" id="p" min="0" max="500" step="10" value="250">
+    <div class="lbl"><span>Trial days</span><span id="dv">7</span></div>
+    <input type="range" id="d" min="3" max="14" value="7">
+    <div class="res" id="tr"></div>
+    <br><a class="btn wa" id="trb" href="#">Send my trial offer →</a>
+  </div>
+</section>
+
+<section class="rev">
+  <h2>Quick answers</h2>
+  <details><summary>Who will I work with?</summary><p>A trained HR assistant from Pakistan. Same person every day, so you do not repeat yourself.</p></details>
+  <details><summary>What can they do?</summary><p>Post jobs on 20–50+ sites, sort CVs, book interviews, answer candidates, make HR files, track leave and more.</p></details>
+  <details><summary>What if I do not like it?</summary><p>You do not pay. Simple.</p></details>
+  <details><summary>Which hours do they work?</summary><p>We match your Gulf time zone. Pakistan is only 1–2 hours ahead.</p></details>
+  <details><summary>How do we start?</summary><p>Tap WhatsApp. We reply fast. You can start the same week.</p></details>
+</section>
+
+<section class="rev" style="text-align:center">
+  <h2>Get your time back.</h2>
+  <p class="sub">Your first month is risk-free.</p>
+  <a class="btn g wa" href="#">Chat on WhatsApp →</a>
+</section>
+<footer>Vercel HR Assistants · Remote team from Pakistan</footer>
+
+<script>
+const NUM="923390990080",MAIL="the19rohaan98@gmail.com";
+const wa=t=>"https://wa.me/"+NUM+"?text="+encodeURIComponent(t);
+document.getElementById("fl").href=wa("Hi, I want an HR assistant.");
+document.querySelectorAll(".wa").forEach(a=>a.href=wa(a.dataset.m||"Hi, I want an HR assistant."));
+const $=id=>document.getElementById(id);
+/* reveal + count */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add("on");
+e.target.querySelectorAll("[data-n]").forEach(el=>{const n=+el.dataset.n;let i=0;const t=setInterval(()=>{i+=Math.max(1,n/30);if(i>=n){i=n;clearInterval(t)}el.textContent=Math.round(i)+(n===0?"%":"")},30)});io.unobserve(e.target)}),{threshold:.2});
+document.querySelectorAll(".rev").forEach(e=>io.observe(e));
+/* quiz */
+const tasks=["Post jobs on many sites","Sort CVs","Book interviews","Reply to candidates","Onboarding papers","Leave and attendance","Something else"];
+const S=[
+{k:"Tasks I can hand off",t:"What can you hand off?",m:1,o:tasks},
+{k:"Biggest time eater",t:"What eats most of your time?",o:tasks},
+{k:"Hours lost per week",t:"Hours lost each week?",o:["Under 5","5 to 10","10 to 20","20 or more"],v:[3,8,15,25]},
+{k:"Biggest worry",t:"If this goes on 6 months, what worries you?",o:["Slow hiring","Losing good people","Stress and burnout","Money lost"],c:1},
+{k:"Plan",t:"How much help do you need?",o:["2 hours a day (300)","4 hours a day (500)","Not sure yet"]},
+{k:"Name",t:"Last step. Who are you?",f:1}
+];
+let i=0,A={},hrs=8;
+function show(){
+ const s=S[i];$("pb").style.width=(i/S.length*100)+"%";let h="";
+ if(s.c){const w=hrs*26;h+=`<div class="note">At this speed you lose <span class="big">${w}</span> hours in 6 months. That is <b>${Math.round(w/8)} full work days.</b></div>`}
+ h+=`<div class="step"><h3>${s.t}</h3>`;
+ if(s.f)h+=`<input type="text" id="nm" placeholder="Your name"><input type="text" id="co" placeholder="Company and country">`;
+ else s.o.forEach((o,j)=>h+=`<button class="opt${s.m&&(A[s.k]||[]).includes(o)?" sel":""}" data-j="${j}">${o}</button>`);
+ h+=`</div><div class="row" style="margin-top:.8rem">${i?'<button class="btn o" id="bk">Back</button>':""}<button class="btn g" id="nx">${s.f?"See my result":"Next"}</button></div>`;
+ $("q").innerHTML=h;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=s.o[b.dataset.j];
+  if(s.m){let a=A[s.k]||[];a=a.includes(o)?a.filter(x=>x!==o):[...a,o];A[s.k]=a;b.classList.toggle("sel")}
+  else{A[s.k]=o;if(s.v)hrs=s.v[b.dataset.j];go(1)}});
+ $("nx").onclick=()=>{if(s.f){A.Name=$("nm").value||"-";A.Company=$("co").value||"-"}go(1)};
+ if($("bk"))$("bk").onclick=()=>go(-1);
+}
+function go(d){i+=d;i>=S.length?done():show()}
+function txt(){return "HR Assistant quiz:\n"+Object.entries(A).map(([k,v])=>k+": "+(Array.isArray(v)?v.join(", "):v)).join("\n")}
+function done(){
+ $("pb").style.width="100%";
+ $("q").innerHTML=`<div class="step"><h3>Thanks ${A.Name==="-"?"":A.Name}! 🎉</h3><div class="note">You can hand off about <b>${hrs*4} hours a month</b> of work. We can start with a <b>free first month</b>.</div>
+ <div class="row"><a class="btn g" target="_blank" rel="noopener" href="${wa(txt())}">Send on WhatsApp</a><a class="btn o" href="mailto:${MAIL}?subject=${encodeURIComponent("HR Assistant quiz")}&body=${encodeURIComponent(txt())}">Send by email</a></div></div>`;
+}
+show();
+/* calculator */
+function calc(){const h=+$("h").value,v=+$("v").value;$("hv").textContent=h;$("vv").textContent=v;$("loss").textContent=Math.round(h*4.3*v).toLocaleString()}
+$("h").oninput=$("v").oninput=calc;calc();
+/* trial */
+function trial(){const p=+$("p").value,d=+$("d").value;$("pv").textContent=p;$("dv").textContent=d;
+ $("tr").innerHTML=`Work with me for <b>${d} days</b>. ${p===0?"Free trial. Pay later only if you love it.":"You pay <b>"+p+"</b> a month rate. Not happy? Pay nothing."}`;
+ $("trb").href=wa(`Hi, I want a custom trial: ${d} days at ${p} per month rate.`)}
+$("p").oninput=$("d").oninput=trial;trial();
+/* plan pick */
+function pick(b){document.querySelectorAll(".plan").forEach(x=>x.classList.toggle("sel",x===b));
+ $("pb2").href=wa(`Hi, I want the 1 month risk-free trial of the ${b.dataset.p} per month plan (${b.dataset.h} hours daily).`)}
+document.querySelectorAll(".plan").forEach(b=>b.onclick=()=>pick(b));
+pick(document.querySelector(".plan.sel"));
+</script>
+</body>
+</html>
